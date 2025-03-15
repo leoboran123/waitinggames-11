@@ -95,8 +95,7 @@ class AdminController extends Controller
         $user_type_admin = UserTypes::where("user_type", "admin")->first()->id;
 
         // get users -> no admin, only fields of id, name, email, active, created_at, updated_at...
-        $users = User::where("user_type_id", "!=", $user_type_admin)->select('id','name','email','active','created_at','updated_at')->get();
-
+        $users = User::where("user_type_id", "!=", $user_type_admin)->select('id','name','email','active','user_type_id','created_at','updated_at')->get();
         return view('admin.users.show', compact('users'));
     }
 
@@ -113,7 +112,6 @@ class AdminController extends Controller
         return redirect()->route('admin_users');
 
     }
-    // -------------------------------
 
     // Admin -> categories
     public function show_categories(){
@@ -190,6 +188,8 @@ class AdminController extends Controller
         $category = Category::where("id", $categoryId)->first();
         $category->delete();
 
+        Profile::where("category_id", $categoryId)->update(['category_id' => 1]);
+
         return redirect()->route("admin_categories");
     }
 
@@ -246,6 +246,8 @@ class AdminController extends Controller
 
         return view("admin.profiles.show", compact("profiles"));
     }
+
+    // Admin -> profiles
 
     public function change_profile_activenes(Profile $profile, $activeness){
         if($activeness == true){

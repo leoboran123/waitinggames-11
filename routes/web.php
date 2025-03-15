@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Middleware\CheckUserInArea;
 use App\Http\Middleware\AdminAuth;
+use App\Http\Middleware\ProfileActive;
+
 
 
 use App\Http\Controllers\CategoryController;
@@ -47,7 +49,7 @@ Route::get('/profile/create', [ProfileController::class, 'create'])->name('creat
 Route::post('/profile/store', [ProfileController::class, 'store'])->name('store_profile');
 
 
-Route::get('/{category:slug}/{profiles:url}', [ProfileController::class, 'show'])->name('show_profile')->middleware(CheckUserInArea::class);
+Route::get('/{category:slug}/{profiles:url}', [ProfileController::class, 'show'])->name('show_profile')->middleware([CheckUserInArea::class, ProfileActive::class]);
 Route::get('/profile', [ProfileController::class, 'index'])->name('my_profile');
 
 

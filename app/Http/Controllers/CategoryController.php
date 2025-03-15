@@ -27,7 +27,7 @@ class CategoryController extends Controller
     {
         // Get and show all corporates by category...
         
-        $profiles = Profile::where("category_id", $category->id)->get();
+        $profiles = Profile::where("category_id", $category->id)->where("active", 1)->get();
 
         return view('category.show', compact("profiles", "category"));
 

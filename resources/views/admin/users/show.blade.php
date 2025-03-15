@@ -10,9 +10,10 @@
             <tr>
                 <th scope="col">İsim</th>
                 <th scope="col">E-Mail</th>
-                <th scope="col">Aktiflik</th>
+                <th scope="col">Kullanıcı Türü</th>
                 <th scope="col">Kayıt Zamanı</th>
                 <th scope="col">Güncelleme Zamanı</th>
+                <th scope="col">Aktiflik</th>
                 <th scope="col">Aktiflik Değiştir</th>
 
             </tr>
@@ -20,6 +21,17 @@
                 <tr>
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
+                    @if ($user->user_type->user_type == "business")
+                        <td>İşletme</td>
+                    @elseif($user->user_type->user_type == "guest")
+                        <td>Kullanıcı</td>
+                    @else
+                        <td>Hata</td>
+
+                    @endif
+                    
+                    <td>{{ $user->email }}</td>
+
                     <td>{{ $user->created_at }}</td>
                     <td>{{ $user->updated_at }}</td>
                     @if ($user->active == 1)
