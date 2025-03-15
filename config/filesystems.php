@@ -36,6 +36,11 @@ return [
             'throw' => false,
         ],
 
+        'dropbox' => [
+        'driver' => 'dropbox',
+        'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -70,7 +75,8 @@ return [
     */
 
     'links' => [
-        public_path('storage') => storage_path('app/public'),
+        public_path('/public_html/storage') => storage_path('app/public'),
+
     ],
 
 ];

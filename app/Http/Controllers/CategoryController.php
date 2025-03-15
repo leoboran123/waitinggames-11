@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Profile;
 
+use Spatie\Dropbox\Client;
 
 class CategoryController extends Controller
 {
@@ -14,10 +15,6 @@ class CategoryController extends Controller
     {
         $all_categories = Category::all();
         
-        // $guest_ip = request()->ip();
-        // $hostname = gethostbyaddr($guest_ip);
-
-        // dd($guest_ip.$hostname);
 
         return view('welcome', compact("all_categories"));
     }
