@@ -3,10 +3,15 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserTypes;
+use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RegisterController extends Controller
 {
@@ -28,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.
@@ -62,11 +67,51 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
+    {   
+        $user_type_id = UserTypes::where("user_type", "guest")->first()->id;
+
+        
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_type_id' => $user_type_id,
         ]);
     }
+
+    protected function create_business(){
+        return view("auth.business_register");
+    }
+
+    protected function store_business(Request $request){
+
+        $validated = $this->validator($request->toArray());
+
+        if($validated->fails()){
+            return redirect('/business-register')
+                        ->withErrors($validated)
+                        ->withInput();
+        }
+        else{
+            // everything is validated...
+            $data = $validated->safe();
+
+            $user_type_id = UserTypes::where("user_type", "business")->first()->id;
+
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'user_type_id' => $user_type_id,
+                'password' => Hash::make($data['password']),
+            ]);
+            
+            Auth::login($user);
+            
+    
+            return redirect('/profile');
+        }
+
+        
+    }
+
 }
