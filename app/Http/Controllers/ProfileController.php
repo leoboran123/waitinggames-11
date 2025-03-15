@@ -59,7 +59,9 @@ class ProfileController extends Controller
         if($checkImage == true){
             $image = $validated["image"];
 
-            $imagePath = $image->store('profile_pictures', 'public');
+            // $imagePath = $image->store('profile_pictures', 'public');
+            $imagePath = Storage::disk('dropbox')->put('public/profile_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+
 
             auth()->user()->profile()->update([
                 'profile_name' => $name,
@@ -119,7 +121,9 @@ class ProfileController extends Controller
         if($checkImage == true){
             $image = $validated["image"];
 
-            $imagePath = $image->store('profile_pictures', 'public');
+            // $imagePath = $image->store('profile_pictures', 'public');
+            $imagePath = Storage::disk('dropbox')->put('public/profile_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+
 
             auth()->user()->profile()->create([
                 'profile_name' => $name,

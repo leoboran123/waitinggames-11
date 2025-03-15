@@ -24,7 +24,7 @@
                     <td>{{ $profile->profile_name }}</td>
                     <td>{{ $profile->user->name }}</td>
                     <td>{{ $profile->description }}</td>
-                    <td><img src="{{ Storage::url( $profile->image ) }}" id="table_image" alt=""> </td>
+                    <td><img src="{{ Storage::disk('dropbox')->url( "public/".$profile->image ) }}" id="table_image" alt=""> </td>
                     <td>{{ $profile->created_at }}</td>
                     <td>{{ $profile->updated_at }}</td>
                     @if ($profile->active == 1)

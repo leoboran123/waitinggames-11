@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 
 use App\Models\User;
@@ -158,7 +159,9 @@ class AdminController extends Controller
         if($checkImage == true){
             $image = $validated["image"];
 
-            $imagePath = $image->store('category_pictures', 'public');
+            // $imagePath = $image->store('category_pictures', 'public');
+            $imagePath = Storage::disk('dropbox')->put('public/category_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+
 
             $category->update([
                 "name" => $name,
@@ -214,7 +217,8 @@ class AdminController extends Controller
         if($checkImage == true){
             $image = $validated["image"];
 
-            $imagePath = $image->store('category_pictures', 'public');
+            // $imagePath = $image->store('category_pictures', 'public');
+            $imagePath = Storage::disk('dropbox')->put('public/category_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
 
             Category::create([
                 'name' => $name,
@@ -263,9 +267,6 @@ class AdminController extends Controller
         return redirect()->route("admin_profiles");
     }
 
-    //STORE'U DA BİTİRDİN, ŞİMDİ PROFİLLER İÇİN ADMİN PANELİ YAP!!! 
-    // AYRICA SİLİNEN KATEGORİLER BAZI PROFİLLERE BAĞLI OLABİLİR
-    // SİLİNDİKLERİ ZAMAN NE OLACAĞINA KARAR VER!
-    // devamı gelsin
-    // ------------------------------
+    
+    
 }

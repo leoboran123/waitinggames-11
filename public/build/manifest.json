@@ -1,0 +1,19 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-Ac6mjcCW.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-bWnzbXKs.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/extra.js": {
+    "file": "assets/extra-fNtk2eh5.js",
+    "name": "extra",
+    "src": "resources/js/extra.js",
+    "isEntry": true
+  }
+}

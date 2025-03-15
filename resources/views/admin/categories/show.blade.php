@@ -33,7 +33,7 @@
                     @else
                         <a href="{{ Storage::url($category->image) }}" target="_blank">
 
-                            <img src="{{ Storage::url($category->image) }}" alt="" id="table_image">
+                            <img src="{{ Storage::disk('dropbox')->url("public/".$category->image) }}" alt="" id="table_image">
                         </a>
                         
                         @endif    
