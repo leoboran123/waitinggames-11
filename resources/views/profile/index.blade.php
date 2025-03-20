@@ -41,7 +41,7 @@
                 <h5>
                     
                     Resim: 
-                    <img id="category_image" src="{{ Storage::disk('dropbox')->url("public/".$user_profile->image) }}" alt="">
+                    <img id="category_image" src="{{ Storage::disk(env('FILESYSTEM'))->url($user_profile->image) }}" alt="">
                     
                 </h5>
                 <h5>

@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 
+
 use App\Models\User;
 use App\Models\UserTypes;
 use App\Models\Category;
@@ -160,8 +161,10 @@ class AdminController extends Controller
             $image = $validated["image"];
 
             // $imagePath = $image->store('category_pictures', 'public');
-            $imagePath = Storage::disk('dropbox')->put('public/category_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
+            $imagePath = 'category_pictures/'.$imageName;
 
+            Storage::disk(env('FILESYSTEM'))->put("public/".$imagePath, file_get_contents($image));
 
             $category->update([
                 "name" => $name,
@@ -218,7 +221,10 @@ class AdminController extends Controller
             $image = $validated["image"];
 
             // $imagePath = $image->store('category_pictures', 'public');
-            $imagePath = Storage::disk('dropbox')->put('public/category_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
+            $imagePath = 'category_pictures/'.$imageName;
+
+            Storage::disk(env('FILESYSTEM'))->put("public/".$imagePath, file_get_contents($image));
 
             Category::create([
                 'name' => $name,

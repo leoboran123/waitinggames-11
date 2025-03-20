@@ -1,18 +1,23 @@
 #category_image{
-    height: 260px;
-    width: 260px;
+    height: 248px;
+    width: 248px;
 
-    margin: 5px;
+}
+
+#categories{
+    display: flex;
+    flex-wrap: wrap; /* Ekrana sığmayanları alta atar */
+    gap: 20px; /* Kartlar arasında boşluk bırakır */
+    justify-content: center; /* Ortalar */
 }
 
 #category{
-    padding: 5px;
-    margin: 5px;
-    max-height: 450px;
-    max-width: 300px;
-
+    width: 30%; /* Kart genişliği (3 tane sığması için) */
+    min-width: 250px; /* Çok küçük ekranda bozulmaması için */
     align-items: center;
 }
+
+
 
 #category_link{
     text-decoration: none;

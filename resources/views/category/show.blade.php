@@ -15,7 +15,7 @@
         @foreach($profiles as $profile)
         <div class="card mb-3" id="category">
                 <a href="/{{$profile->category->slug}}/{{ $profile->url }}" id="category_link">
-                    <img class="card-img-top" id="category_image" src="{{ Storage::disk('dropbox')->url($profile->image) }}" alt="Card image cap">
+                    <img class="card-img-top" id="category_image" src="{{ Storage::disk(env('FILESYSTEM'))->url($profile->image) }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">
                             {{ $profile->profile_name }}

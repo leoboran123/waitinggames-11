@@ -5,6 +5,7 @@
         <a href="{{ route("admin_panel") }}"><button class="btn btn-primary">Geri git</button></a>
 
         <h3>Kullanıcılar</h3>
+        <div class="table-responsive">
 
         <table class="table" id="table">
             <tr>
@@ -30,7 +31,6 @@
 
                     @endif
                     
-                    <td>{{ $user->email }}</td>
 
                     <td>{{ $user->created_at }}</td>
                     <td>{{ $user->updated_at }}</td>
@@ -53,6 +53,8 @@
                 </tr>
             @endforeach
         </table>
+        </div>
+
         
 </div>    
 

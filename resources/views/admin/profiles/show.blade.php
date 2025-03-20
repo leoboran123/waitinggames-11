@@ -5,6 +5,7 @@
         <a href="{{ route("admin_panel") }}"><button class="btn btn-primary">Geri git</button></a>
 
         <h3>Profiller</h3>
+        <div class="table-responsive">
 
         <table class="table" id="table">
             <tr>
@@ -24,7 +25,7 @@
                     <td>{{ $profile->profile_name }}</td>
                     <td>{{ $profile->user->name }}</td>
                     <td>{{ $profile->description }}</td>
-                    <td><img src="{{ Storage::disk('dropbox')->url( "public/".$profile->image ) }}" id="table_image" alt=""> </td>
+                    <td><img src="{{ Storage::disk(env('FILESYSTEM'))->url( $profile->image ) }}" id="table_image" alt=""> </td>
                     <td>{{ $profile->created_at }}</td>
                     <td>{{ $profile->updated_at }}</td>
                     @if ($profile->active == 1)
@@ -46,6 +47,8 @@
                 </tr>
             @endforeach
         </table>
+        </div>
+
         
 </div>    
 

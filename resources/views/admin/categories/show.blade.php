@@ -7,6 +7,7 @@
  
     <h3>Kategoriler</h3>
     <a href="{{ route("admin_category_create") }}"><button class="btn btn-success">Kategori Ekle</button></a>
+    <div class="table-responsive">
 
     <table class="table" id="table">
         <tr>
@@ -31,10 +32,8 @@
                     @if ($category->image == null)
                         Resim yok
                     @else
-                        <a href="{{ Storage::url($category->image) }}" target="_blank">
 
-                            <img src="{{ Storage::disk('dropbox')->url("public/".$category->image) }}" alt="" id="table_image">
-                        </a>
+                            <img src="{{ Storage::disk(env('FILESYSTEM'))->url($category->image) }}" alt="" id="table_image">
                         
                         @endif    
                 </td>
@@ -63,6 +62,8 @@
             </tr>
         @endforeach
     </table>
+    </div>
+
         
 </div>   
 @endsection

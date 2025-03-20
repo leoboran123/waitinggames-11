@@ -36,10 +36,10 @@ return [
             'throw' => false,
         ],
 
-        'dropbox' => [
-        'driver' => 'dropbox',
-        'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
-        ],
+        // 'dropbox' => [
+        //     'driver' => 'dropbox',
+        //     'authorization_token' => env('DROPBOX_ACCESS_TOKEN'),
+        // ],
 
         'public' => [
             'driver' => 'local',

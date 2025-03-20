@@ -12,7 +12,6 @@ use App\Models\Category;
 
 class ProfileController extends Controller
 {
-
     public function index(){
         $user = auth()->user();
 
@@ -58,10 +57,14 @@ class ProfileController extends Controller
 
         if($checkImage == true){
             $image = $validated["image"];
+            
+            
 
             // $imagePath = $image->store('profile_pictures', 'public');
-            $imagePath = Storage::disk('dropbox')->put('public/profile_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
+            $imagePath = 'profile_pictures/'.$imageName;
 
+            Storage::disk(env('FILESYSTEM'))->put($imagePath, file_get_contents($image));
 
             auth()->user()->profile()->update([
                 'profile_name' => $name,
@@ -122,8 +125,10 @@ class ProfileController extends Controller
             $image = $validated["image"];
 
             // $imagePath = $image->store('profile_pictures', 'public');
-            $imagePath = Storage::disk('dropbox')->put('public/profile_pictures/'.$image->getClientOriginalName(), file_get_contents($image));
+            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
+            $imagePath = 'profile_pictures/'.$imageName;
 
+            Storage::disk(env('FILESYSTEM'))->put("public/".$imagePath, file_get_contents($image));
 
             auth()->user()->profile()->create([
                 'profile_name' => $name,

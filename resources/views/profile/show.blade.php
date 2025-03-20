@@ -10,7 +10,7 @@
 
     <div class="profile">
 
-        <img id="category_image" src="{{ Storage::disk('dropbox')->url("public/".$profile->image) }}" alt="">
+        <img id="category_image" src="{{ Storage::disk(env('FILESYSTEM'))->url($profile->image) }}" alt="">
         <h1>{{$profile->profile_name}} </h1>
         <h5>{{ $profile->description }}</h5>
 
