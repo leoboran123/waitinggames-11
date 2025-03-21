@@ -56,14 +56,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Kayıt Ol') }}</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('business_register_create') }}">{{ __('İşletme Kayıt') }}</a>
-                                </li>
+                                
                             @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::user()->username }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -96,13 +94,6 @@
 
                     <ul class="navbar-nav ml-auto">
                         
-                        <li class="nav-item">
-                            <form action="{{ route("search") }}" method="GET" id="search_form">
-                                <input class="form-control" type="text" name="search" id="search_input" placeholder="Arama">
-                                <button type="submit" id="search_submit_button">Ara</button>
-                            </form>
-                        </li>
-
                         @guest
 
                         @else

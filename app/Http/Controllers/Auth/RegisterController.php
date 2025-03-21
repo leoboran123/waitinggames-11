@@ -54,7 +54,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -72,46 +72,12 @@ class RegisterController extends Controller
 
         
         return User::create([
-            'name' => $data['name'],
+            'username' => $data['username'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'user_type_id' => $user_type_id,
         ]);
     }
 
-    protected function create_business(){
-        return view("auth.business_register");
-    }
-
-    protected function store_business(Request $request){
-
-        $validated = $this->validator($request->toArray());
-
-        if($validated->fails()){
-            return redirect('/business-register')
-                        ->withErrors($validated)
-                        ->withInput();
-        }
-        else{
-            // everything is validated...
-            $data = $validated->safe();
-
-            $user_type_id = UserTypes::where("user_type", "business")->first()->id;
-
-            $user = User::create([
-                'name' => $data['name'],
-                'email' => $data['email'],
-                'user_type_id' => $user_type_id,
-                'password' => Hash::make($data['password']),
-            ]);
-            
-            Auth::login($user);
-            
     
-            return redirect('/profile');
-        }
-
-        
-    }
-
 }

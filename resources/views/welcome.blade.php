@@ -4,37 +4,11 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <h1>Kategoriler</h1>
-        <div id="categories">
-            @if ($all_categories->count() == 0)
-                <p>Boş</p>
-            @else
-                @foreach($all_categories as $category)
-                    @if ($category->active == 0)
-                    
-                    @else
+        Sıralama
 
-                        <div class="card mb-3" id="category">
-                            <a href="/category/{{ $category->slug }}" id="category_link">
-                                <img class="card-img-top" id="category_image" src="{{ Storage::disk(env('FILESYSTEM'))->url($category->image) }}" alt="Card image cap">
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        {{ $category->name }}
-                                    </h5>
-                                    @if ($category->description != null)
-                                    
-                                    <p class="card-text">{{ $category->description }}</p>
-                                    @endif
-                                </div>
-                            </a>
-                        </div>
-                    @endif
-                    
-            
-                @endforeach
-            @endif
-        </div>
+        <a href="{{ route("game_index") }}" ><button class="btn btn-success">Oyuna git</button></a>
     </div>
+
 
     <div class="welcome_text">
         <h5>

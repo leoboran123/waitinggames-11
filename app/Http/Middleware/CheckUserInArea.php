@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\Profile;
+use App\Models\Business;
 
 
 class CheckUserInArea
@@ -20,38 +20,20 @@ class CheckUserInArea
      */
     public function handle(Request $request, Closure $next)
     {   
-        // $user_ip = request()->ip();
-        $user_ip = request()->getClientIp();
-        $profileUrl = $request->route('profiles');
-        $profile = Profile::where("url", $profileUrl)->first();
-        $profile_static_ip_adress = $profile->static_ip_adress;
-
-
-        if(Auth::check()){
-            $user_id = auth()->user()->id;
-        }
-        else{
-            $user_id = 0;
-
-        }
-
+        $user_ip = strval(request()->getClientIp());
         
-        $profile_owner_id = $profile->user_id;
+        $static_ip_adress_list = Business::where("static_ip_adress", $user_ip)->where("active",1)->first();
 
+        if($static_ip_adress_list == null){
+            abort(403, "İşletme ağına bağlı değilsiniz!");
 
-        if($profile_static_ip_adress != null){
-            // profile has static ip adress
-            if($user_ip == $profile_static_ip_adress || $user_id == $profile_owner_id){
-                return $next($request);
-                
-            }
-            else{
-                abort(403, "İşletme ağına bağlı değilsiniz!");
-            }
         }
         else{
-            // no static ip adress
             return $next($request);
+
         }
+        
+        
+        
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Models\UserTypes;
-use App\Models\Category;
+use App\Models\Business;
 use App\Models\Profile;
 
 
@@ -97,7 +97,7 @@ class AdminController extends Controller
         $user_type_admin = UserTypes::where("user_type", "admin")->first()->id;
 
         // get users -> no admin, only fields of id, name, email, active, created_at, updated_at...
-        $users = User::where("user_type_id", "!=", $user_type_admin)->select('id','name','email','active','user_type_id','created_at','updated_at')->get();
+        $users = User::where("user_type_id", "!=", $user_type_admin)->select('id','username','email','active','user_type_id','created_at','updated_at')->get();
         return view('admin.users.show', compact('users'));
     }
 
@@ -115,150 +115,15 @@ class AdminController extends Controller
 
     }
 
-    // Admin -> categories
-    public function show_categories(){
-        $categories = Category::all();
-
-        return view('admin.categories.show', compact('categories'));
-    }
-
-    public function change_category_activenes(Category $category, $category_activeness){
-        if($category_activeness == 1){
-            $category->active = 0;
-        }
-        else{
-            $category->active = 1;
-        }
-        $category->save();
-
-        return redirect()->route('admin_categories');
-
-    }
-
-    public function edit_category(Category $category){
-        $old_values = $category;
-
-        return view('admin.categories.edit', compact('category', 'old_values'));
-    }
-
-    public function update_category(Request $request, $categoryId){
-           
-        $validated = $request->validate([
-            "name" => "required|max:255",
-            "description" => "max:255",
-            "image" => "image|nullable", 
-        ]);
-        
-        $name = $validated["name"];
-        $description = $validated["description"];
-        $checkImage = $request->hasFile('image');
-
-        // Category to be updated;
-        $category = Category::where("id", $categoryId)->first();
-
-
-        if($checkImage == true){
-            $image = $validated["image"];
-
-            // $imagePath = $image->store('category_pictures', 'public');
-            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
-            $imagePath = 'category_pictures/'.$imageName;
-
-            Storage::disk(env('FILESYSTEM'))->put("public/".$imagePath, file_get_contents($image));
-
-            $category->update([
-                "name" => $name,
-                "description" => $description,
-                "image" => $imagePath,
-            ]);
-        }
-        else{
-            
-            $category->update([
-                "name" => $name,
-                "description" => $description,
-            ]);
-        }
-
-        return redirect()->route("admin_categories");
-        
-    }
-
-    public function delete_category($categoryId){
-
-        return view("admin.categories.delete", compact("categoryId"));
-    }
-
-    public function delete_category_done($categoryId){
-        
-        $category = Category::where("id", $categoryId)->first();
-        $category->delete();
-
-        Profile::where("category_id", $categoryId)->update(['category_id' => 1]);
-
-        return redirect()->route("admin_categories");
-    }
-
-    public function create_category(){
-        return view("admin.categories.create");
-    }
-
-    public function store_category(Request $request){
-        $validated = $request->validate([
-            "name" => "string|max:255",
-            "description" => "string:max:255",
-            "image" => "image",
-        ]);
-
-        $name = $validated["name"];
-        $description = $validated["description"];
-        $name_fixed = strtoupper($name);
-        $slug = Str::slug($name,'-');
-        $checkImage = $request->hasFile('image');
-
-
-        if($checkImage == true){
-            $image = $validated["image"];
-
-            // $imagePath = $image->store('category_pictures', 'public');
-            $imageName = Str::uuid(). "." . $image->getClientOriginalExtension();
-            $imagePath = 'category_pictures/'.$imageName;
-
-            Storage::disk(env('FILESYSTEM'))->put("public/".$imagePath, file_get_contents($image));
-
-            Category::create([
-                'name' => $name,
-                'description' => $description,
-                'image' => $imagePath,
-                'active' => 1,
-                'name_fixed' => $name_fixed,
-                'slug' => $slug,
-            ]);
-
-            return redirect()->route("admin_categories");
-        }
-        else{
-            Category::create([
-                'name' => $name,
-                'description' => $description,
-                'active' => 1,
-                'name_fixed' => $name_fixed,
-                'slug' => $slug,
-            ]);
-
-            return redirect()->route("admin_categories");
-        }
-
-    }
-
-    public function show_profiles(){
-        $profiles = Profile::all();
-
-        return view("admin.profiles.show", compact("profiles"));
-    }
 
     // Admin -> profiles
+    public function show_profiles(){
 
+        $profiles = Profile::all();
+        
+        
+        return view("admin.profiles.show", compact("profiles"));
+    }
     public function change_profile_activenes(Profile $profile, $activeness){
         if($activeness == true){
             $profile->active = 0;
@@ -273,6 +138,110 @@ class AdminController extends Controller
         return redirect()->route("admin_profiles");
     }
 
+
+    // Admin -> businesess
+    public function show_businesess(){
+        $businesess = Business::all();
+
+        return view('admin.business.show', compact("businesess"));
+    }
+    public function create_business(){
+        return view('admin.business.create');
+    }
+
+    public function store_business(Request $request){
+        $validated = $request->validate([
+            "business_name" => "string|max:255",
+            "business_description" => "string|max:255|nullable",
+            "static_ip_adress" => "string|nullable",
+            "adress" => "url|nullable",
+
+        ]);
+
+        $business_name = $validated["business_name"];
+        $business_description = $validated["business_description"];
+        $static_ip_adress = $validated["static_ip_adress"];
+        $adress = $validated["adress"];
+        $active = 1;
+
+        Business::create([
+            'business_name' => $business_name,
+            'business_description' => $business_description,
+            'static_ip_adress' => $static_ip_adress,
+            'adress' => $adress,
+            'active' => $active,
+
+        ]);
+
+        return redirect()->route("admin_businesess");
+
+
+
+
+    }
     
-    
+    public function change_business_activenes(Business $business, $activeness){
+        if($activeness == true){
+            $business->active = 0;
+        }
+        else{
+            $business->active = 1;
+
+        }
+
+        $business->save();
+
+        return redirect()->route("admin_businesess");
+
+    }
+
+    public function edit_business(Business $business){
+
+        return view('admin.business.edit', compact('business'));
+    }
+
+
+    public function update_business(Request $request, $business_id){
+        
+        $validated = $request->validate([
+            "business_name" => "string|max:255",
+            "business_description" => "string|max:255|nullable",
+            "static_ip_adress" => "string|nullable",
+            "adress" => "url|nullable",
+
+        ]);
+
+        $business_name = $validated["business_name"];
+        $business_description = $validated["business_description"];
+        $static_ip_adress = $validated["static_ip_adress"];
+        $adress = $validated["adress"];
+
+        $business = Business::where("id",$business_id)->first();
+        
+        $business->update([
+            "business_name" => $business_name,
+            "business_description" => $business_description,
+            "static_ip_adress" => $static_ip_adress,
+            "adress" => $adress,
+
+        ]);
+        
+        return redirect()->route("admin_businesess");
+
+    }
+
+    public function delete_business($business_id){
+
+        return view('admin.business.delete', compact('business_id'));
+    }
+
+    public function delete_business_done($business_id){
+        $business = Business::where("id", $business_id)->first();
+
+        $business->delete();
+
+        return redirect()->route("admin_businesess");
+
+
+    }
 }
