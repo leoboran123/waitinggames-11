@@ -6,9 +6,13 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/gamestyle.css',
+
 
                 'resources/js/app.js',
                 'resources/js/extra.js',
+
+
             
             ],
             refresh: true,
