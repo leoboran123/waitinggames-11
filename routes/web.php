@@ -56,6 +56,8 @@ Route::middleware([Authenticate::class])->group(function(){
     Route::get('/profile', [ProfileController::class, 'index'])->name('my_profile');
 
     Route::get('/play', [GameController::class, 'index'])->name('game_index')->middleware(CheckUserInArea::class);
+    Route::get('/getScore', [GameController::class, 'store_score'])->name('get_score')->middleware(CheckUserInArea::class);
+
 
 });
 

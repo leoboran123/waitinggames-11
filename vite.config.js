@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/js/extra.js',
 
 
+
             
             ],
             refresh: true,

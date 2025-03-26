@@ -23,7 +23,8 @@ class CheckUserInArea
         $user_ip = strval(request()->getClientIp());
         $business_list = Business::all();
 
-        if($business_list == null){
+
+        if($business_list->isEmpty()){
             // no business added...
             return $next($request);
 

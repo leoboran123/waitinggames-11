@@ -7,18 +7,34 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 use App\Models\Profile;
+use App\Models\GameScores;
+
 
 
 class ProfileController extends Controller
 {
-    public function index(){
+        protected $leaderboard_count = 50;
+
+
+
+        public function index(){
         $user = auth()->user();
 
         $user_profile = Profile::where("user_id", $user->id)->first();
         $user_type_id = $user->user_type_id;
 
 
-        return view("profile.index", compact("user_profile", "user_type_id"));
+        date_default_timezone_set("Europe/Istanbul");
+        $current_interval_date = date('m-Y');
+
+        $user_game_stats = GameScores::where("user_id", $user->id)->where('date_interval', $current_interval_date)->max('score');
+
+
+        $leaderboard_user_stat = GameScores::where('date_interval', $current_interval_date)->orderBy('score','DESC')
+        ->paginate($this->leaderboard_count);
+
+
+        return view("profile.index", compact("user_profile", "user_type_id", "user_game_stats","leaderboard_user_stat"));
     }
 
     public function edit(){

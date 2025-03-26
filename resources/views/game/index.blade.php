@@ -1,19 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.game_app')
 
 @section('head')
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
     <title>Unity Web Player | pythontest2</title>
     @vite([
         'resources/css/gamestyle.css',
-
-        
     
     ])
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
 @endsection
 
 @section('content')
-
 
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas" width=1080 height=1920 tabindex="-1"></canvas>
@@ -27,14 +25,16 @@
       <div id="unity-footer">
         <div id="unity-logo-title-footer"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">pythontest2</div>
+        <div id="unity-build-title">game</div>
+        <div id="go-back"><a href="/"><button class="btn btn-info">Oyundan çık</button></a></div>
+
       </div>
     </div>
     
 
     <script>
       var canvas = document.querySelector("#unity-canvas");
-
+      
       // Shows a temporary message banner/ribbon for a few seconds, or
       // a permanent error message on top of the canvas if type=='error'.
       // If type=='warning', a yellow highlight color is used.
@@ -135,9 +135,24 @@
 
 
     <script>
-        function ReceiveScore(score){
-          console.log("Final skor: "+ score);
-          
+      function ReceiveScore(score){
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {  
+                
+                console.log("Server response: "+this.responseText);                    
+            };
+            
+            
         }
+        xmlhttp.open("GET","/getScore?score="+score,true);
+
+        xmlhttp.send();
+      }
     </script>
+
+    
 @endsection
+
+

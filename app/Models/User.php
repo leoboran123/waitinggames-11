@@ -52,4 +52,8 @@ class User extends Authenticatable
     public function user_type(){
         return $this->belongsTo(UserTypes::class);
     }
+
+    public function gamescore(){
+        return $this->hasMany(GameScores::class);
+    }
 }
