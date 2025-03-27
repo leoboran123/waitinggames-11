@@ -64,6 +64,28 @@
     width: 130px;
 }
 
+#countdown{
+    color: whitesmoke;
+    text-align: center;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(108, 108, 110), black, rgb(108, 108, 110));
 
+    border-radius: 5px;
+}
 
+.game-button{
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.game-button a{
+    width: 100%;
+    display: block;
+}
+
+.game-button button{
+    width: 100%;
+
+}
 
