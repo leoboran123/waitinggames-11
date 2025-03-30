@@ -27,7 +27,7 @@ class ProfileController extends Controller
         date_default_timezone_set("Europe/Istanbul");
         $current_interval_date = date('m-Y');
 
-        $user_game_stats = GameScores::where("user_id", $user->id)->where('date_interval', $current_interval_date)->max('score');
+        $user_game_stats = GameScores::where("user_id", $user->id)->where('date_interval', $current_interval_date)->where("active",1)->max('score');
 
 
         $leaderboard_user_stat = GameScores::where('date_interval', $current_interval_date)->orderBy('score','DESC')

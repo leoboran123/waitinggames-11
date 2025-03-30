@@ -14,12 +14,16 @@ use App\Models\User;
 use App\Models\UserTypes;
 use App\Models\Business;
 use App\Models\Profile;
+use App\Models\GameScores;
+
 
 
 
 
 class AdminController extends Controller
 {
+    protected $leaderboard_count = 50;
+
     public function index(){
         return view("admin.index");
     }
@@ -242,6 +246,64 @@ class AdminController extends Controller
 
         return redirect()->route("admin_businesess");
 
+
+    }
+
+    public function admin_gamescore(){
+
+        // leaderboard;
+        // get current date interval
+        date_default_timezone_set("Europe/Istanbul");
+        $current_interval_date = date('m-Y');
+
+        $leaderboard_user_stat = GameScores::where('date_interval', $current_interval_date)->orderBy('score','DESC')
+        ->paginate($this->leaderboard_count);
+
+
+
+        // get last months date interval
+        date_default_timezone_set("Europe/Istanbul");
+        $current_interval_date = date('m-Y');
+        
+        $last_interval = explode("-",$current_interval_date);
+
+        $last_interval_month = (int)$last_interval[0] - 1;
+
+        // new year;
+        if($last_interval_month <= 0){
+            $last_interval_month = 12;
+            $last_interval_year = (int)$last_interval[1] - 1; 
+        }
+        else{
+            $last_interval_year = $last_interval[1];
+        }
+
+        // if month is smaller than 10, add 0 to the beginning.
+        if($last_interval_month < 10){
+            $last_interval_month = "0".$last_interval_month;
+        }
+
+        $last_interval_date = (string)$last_interval_month."-".(string)$last_interval_year;
+
+        // get the former leaderboard
+        $former_leaderboard = GameScores::where('date_interval', $last_interval_date)->where('active', 1)->orderBy('score','DESC')
+        ->paginate($this->leaderboard_count);
+        
+        return view("admin.game.show", compact("leaderboard_user_stat", "former_leaderboard"));
+    }
+
+    public function change_gamescore_activenes(GameScores $gamescore, $activeness){
+        if($activeness == true){
+            $gamescore->active = 0;
+        }
+        else{
+            $gamescore->active = 1;
+
+        }
+
+        $gamescore->save();
+        
+        return redirect()->route('admin_gamescore');
 
     }
 }

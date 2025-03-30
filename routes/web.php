@@ -86,6 +86,10 @@ Route::middleware([AdminAuth::class])->group(function() {
     Route::get('/admin/businesess/delete/{business_id}', [AdminController::class, 'delete_business'])->name('admin_business_delete');
     Route::post('/admin/businesess/delete_done/{business_id}', [AdminController::class, 'delete_business_done'])->name('admin_business_delete_done');
 
+
+    Route::get('/admin/gamescore/', [AdminController::class, 'admin_gamescore'])->name('admin_gamescore');
+    Route::get('/admin/gamescore/change-gamescore-activeness/{gamescore:id}/{activeness}', [AdminController::class, 'change_gamescore_activenes'])->name('admin_gamescore_activeness_change');
+
 });
 
 

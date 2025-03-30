@@ -12,6 +12,7 @@
 
             <a href="{{ route("game_index") }}"><button class="btn btn-success">Oyuna git</button></a>
         </div>
+        <hr style="margin: 15px;">
 
         <div class="leaderboard">
             <h1>Bu ayın sıralaması</h1>
@@ -63,7 +64,7 @@
             @endif
 
         </div>
-
+        <hr style="margin: 15px;">
         <div class="former-leaderboard">
         <h1>Geçen ayın sıralaması</h1>
             @if ($former_leaderboard->isEmpty())
@@ -147,14 +148,14 @@
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the result in the element with id="demo"
+    // Display the result in the element with id="countdown"
     document.getElementById("countdown").innerHTML = days + " gün, " + hours + " saat, "
     + minutes + " dakika, " + seconds + " saniye kaldı!";
 
     // If the count down is finished, write some text
     if (distance < 0) {
         clearInterval(x);
-        document.getElementById("countdown").innerHTML = "EXPIRED";
+        document.getElementById("countdown").innerHTML = "Süre sona erdi!";
     }
     }, 1000);
 </script>

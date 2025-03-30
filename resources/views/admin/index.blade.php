@@ -7,6 +7,8 @@
         <a href="{{ route("admin_users") }}"><button class="btn btn-primary">Kullanıcılar</button></a>
         <a href="{{ route("admin_profiles") }}"><button class="btn btn-primary">Profiller</button></a>
         <a href="{{ route("admin_businesess") }}"><button class="btn btn-primary">İşletmeler</button></a>
+        <a href="{{ route("admin_gamescore") }}"><button class="btn btn-primary">Sıralama</button></a>
+        
 
 
     </div>

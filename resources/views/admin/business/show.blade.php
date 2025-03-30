@@ -3,9 +3,13 @@
 @section('content')
     <div class="container">
         <a href="{{ route("admin_panel") }}"><button class="btn btn-primary">Geri git</button></a>
+        <hr style="margin: 10px;">
 
         <h3>İşletmeler</h3>
+        <p>(İşletme eklenmediği sürece oyun herkes tarafından erişilebilir durumdadır)</p>
+        <hr style="margin: 10px;">
         <a href="{{ route("admin_business_create") }}"><button class="btn btn-success">İşletme Ekle</button></a>
+        
         <div class="table-responsive">
 
         <table class="table" id="table">
