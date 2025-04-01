@@ -33,7 +33,7 @@ class ProfileController extends Controller
         $leaderboard_user_stat = GameScores::where('date_interval', $current_interval_date)->orderBy('score','DESC')
         ->paginate($this->leaderboard_count);
 
-
+        
         return view("profile.index", compact("user_profile", "user_type_id", "user_game_stats","leaderboard_user_stat"));
     }
 

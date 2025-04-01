@@ -2,6 +2,11 @@
 
 @section('content')
     <div class="container">
+        <a href="{{ route("admin_panel") }}"><button class="btn btn-primary">Geri git</button></a>
+        <hr style="margin: 5px;">
+
+        <p>(Deaktive edilen skorlar sadece skor tablosundan silinecektir. Kullanıcının bütün skorlarını deaktive etmek için kullanıcı sayfasından kullanıcıyı devre dışı bırakın)</p>
+        <hr style="margin: 5px;">
         <div class="leaderboard">
                 <h1>Bu ayın güncel sıralaması</h1>
                 @if ($leaderboard_user_stat->isEmpty())
@@ -10,11 +15,12 @@
                     
                     <div class="table-responsive" id="leaderboard">
                         
-                        <table class="table table-hover" id="table">
+                        <table class="table table-hover table-bordered" id="table">
                             <tr class="table-dark">
                                 <th scope="col">Sıra</th>
                                 <th scope="col">Kullanıcı İsmi</th>
                                 <th scope="col">Skor</th>
+                                <th scope="col">Oynanma Tarihi</th>
                                 <th scope="col">Aktiflik</th>
 
                                 
@@ -33,6 +39,8 @@
                                             <td>{{ $stat->user->username }}</td>
 
                                         <td>{{ $stat->score }}</td>
+                                        <td>{{ $stat->created_at }}</td>
+
                                         @if($stat->active == 1)
 
                                             <td><a href="{{ route('admin_gamescore_activeness_change', [$stat->id, $stat->active]) }}"><button class="btn btn-warning">Deaktive Et</button></a></td>
@@ -61,11 +69,12 @@
                 
                 <div class="table-responsive" id="leaderboard">
                     
-                    <table class="table table-hover" id="table">
+                    <table class="table table-hover table-bordered" id="table">
                         <tr class="table-dark">
                             <th scope="col">Sıra</th>
                             <th scope="col">Kullanıcı İsmi</th>
                             <th scope="col">Skor</th>
+                            <th scope="col">Oynanma Tarihi</th>
                             <th scope="col">Aktiflik</th>
 
                             
@@ -84,6 +93,8 @@
                                         <td>{{ $stat->user->username }}</td>
 
                                     <td>{{ $stat->score }}</td>
+                                    <td>{{ $stat->created_at }}</td>
+                        
                                     @if($stat->active == 1)
 
                                         <td><a href="{{ route('admin_gamescore_activeness_change', [$stat->id, $stat->active]) }}"><button class="btn btn-warning">Deaktive Et</button></a></td>

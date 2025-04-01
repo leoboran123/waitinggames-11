@@ -12,7 +12,7 @@
         
         <div class="table-responsive">
 
-        <table class="table" id="table">
+        <table class="table table-hover" id="table">
             <tr>
                 <th scope="col">İşletme İsmi</th>
                 <th scope="col">İşletme Açıklaması</th>
@@ -32,7 +32,11 @@
                 <tr>
                     <td>{{ $business->business_name }}</td>
                     <td>{{ $business->business_description }}</td>
-                    <td>{{ $business->adress }}</td>
+                    @if ($business->adress == null)
+                        <td>Adres yok</td>
+                    @else
+                        <td><a href="{{ $business->adress }}" target="_blank">{{ $business->adress }}</a></td>
+                    @endif
                     <td>{{ $business->static_ip_adress }}</td>
                     <td>{{ $business->created_at }}</td>
                     <td>{{ $business->updated_at }}</td>

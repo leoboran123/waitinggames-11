@@ -23,7 +23,11 @@
 
     <h1>Oyun</h1>
     <p>
-        Bu ayki maksimum skorun: <strong>{{ $user_game_stats }}!</strong>
+        @if ($user_game_stats == null)
+            Bu ay henüz oynamadın! Oynamak için <a href="{{ route('game_index') }}">tıkla!</a>
+        @else
+            Bu ayki maksimum skorun: <strong>{{ $user_game_stats }}!</strong>
+        @endif
     </p> 
    
 

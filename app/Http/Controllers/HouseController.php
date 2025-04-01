@@ -22,8 +22,15 @@ class HouseController extends Controller
         date_default_timezone_set("Europe/Istanbul");
         $current_interval_date = date('m-Y');
 
-        $leaderboard_user_stat = GameScores::where('date_interval', $current_interval_date)->where('active', 1)->orderBy('score','DESC')
+        $leaderboard_user_stat = GameScores::selectRaw('game_scores.*') // Tüm sütunları seç
+        ->join('users', 'game_scores.user_id', '=', 'users.id')
+        ->where('users.active', 1)
+        ->where('game_scores.active', 1)
+        ->where('game_scores.date_interval', $current_interval_date)
+        ->whereRaw('game_scores.score = (SELECT MAX(score) FROM game_scores gs WHERE gs.user_id = game_scores.user_id AND gs.date_interval = ? AND gs.active=1)', [$current_interval_date])
+        ->orderBy('game_scores.score', 'DESC')
         ->paginate($this->leaderboard_count);
+
 
         $check_user_is_logged_in = Auth::check();
 
@@ -57,7 +64,13 @@ class HouseController extends Controller
         $last_interval_date = (string)$last_interval_month."-".(string)$last_interval_year;
 
         // get the former leaderboard
-        $former_leaderboard = GameScores::where('date_interval', $last_interval_date)->where('active', 1)->orderBy('score','DESC')
+        $former_leaderboard = GameScores::selectRaw('game_scores.*') // Tüm sütunları seç
+        ->join('users', 'game_scores.user_id', '=', 'users.id')
+        ->where('users.active', 1)
+        ->where('game_scores.active', 1)
+        ->where('game_scores.date_interval', $last_interval_date)
+        ->whereRaw('game_scores.score = (SELECT MAX(score) FROM game_scores gs WHERE gs.user_id = game_scores.user_id AND gs.date_interval = ? AND gs.active=1)', [$last_interval_date])
+        ->orderBy('game_scores.score', 'DESC')
         ->paginate($this->leaderboard_count);
 
 

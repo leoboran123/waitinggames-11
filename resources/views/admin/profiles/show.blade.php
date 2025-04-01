@@ -7,7 +7,7 @@
         <h3>Profiller</h3>
         <div class="table-responsive">
 
-        <table class="table" id="table">
+        <table class="table table-hover" id="table">
             <tr>
                 <th scope="col">Kullanıcı İsmi</th>
                 <th scope="col">İsim</th>

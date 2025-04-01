@@ -30,9 +30,11 @@ class CheckUserInArea
 
         }
         else{
-
             
-            $static_ip_adress_list = Business::where("static_ip_adress", $user_ip)->where("active",1)->first();
+            $static_ip_adress_list = Business::where("static_ip_adress", $user_ip)
+            ->where("active",1)
+            ->first();
+
             
             if($static_ip_adress_list == null){
                 abort(403, "İşletme ağına bağlı değilsiniz!");

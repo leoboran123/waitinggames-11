@@ -3,11 +3,15 @@
 @section('content')
     <div class="container">
         <a href="{{ route("admin_panel") }}"><button class="btn btn-primary">Geri git</button></a>
+        <hr style="margin: 5px;">
 
         <h3>Kullanıcılar</h3>
+        <p>(Deaktive edilen kullanıcılar oyun sıralamasından silinir ve hesaplarına giriş yapmaları engellenir!)</p>
+        <hr style="margin: 5px;">
+
         <div class="table-responsive">
 
-        <table class="table" id="table">
+        <table class="table table-hover" id="table">
             <tr>
                 <th scope="col">Kullanıcı Adı</th>
                 <th scope="col">E-Mail</th>
