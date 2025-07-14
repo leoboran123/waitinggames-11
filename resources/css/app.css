@@ -1,0 +1,91 @@
+#category_image{
+    height: 248px;
+    width: 248px;
+
+}
+
+#categories{
+    display: flex;
+    flex-wrap: wrap; /* Ekrana sığmayanları alta atar */
+    gap: 20px; /* Kartlar arasında boşluk bırakır */
+    justify-content: center; /* Ortalar */
+}
+
+#category{
+    width: 30%; /* Kart genişliği (3 tane sığması için) */
+    min-width: 250px; /* Çok küçük ekranda bozulmaması için */
+    align-items: center;
+}
+
+
+
+#category_link{
+    text-decoration: none;
+    color: black;
+}
+
+
+#search_form{
+    display:flex;
+    flex-direction:row;
+    
+    border:1px solid grey;
+  
+    padding:1px;
+}
+
+#search_form:focus-within { 
+    outline: 1px solid blue 
+  }
+
+
+#search_input{
+    border:none;
+    flex-grow: 2;
+}
+
+#search_input:focus{
+    outline:none;
+}
+
+#search_submit_button{
+    border:1px solid blue;
+    background:blue;
+    color:white;
+}
+
+#table{
+    text-align: center;
+    vertical-align: center;
+}
+
+#table_image{
+    height: 130px;
+    width: 130px;
+}
+
+#countdown{
+    color: whitesmoke;
+    text-align: center;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(108, 108, 110), black, rgb(108, 108, 110));
+
+    border-radius: 5px;
+}
+
+.game-button{
+    text-align: center;
+    align-items: center;
+    width: 100%;
+}
+
+.game-button a{
+    width: 100%;
+    display: block;
+}
+
+.game-button button{
+    width: 100%;
+
+}
+
